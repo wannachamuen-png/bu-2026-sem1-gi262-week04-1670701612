@@ -8,15 +8,30 @@ namespace Solution
 
     public class OOPExit : Identity
     {
+        
         public GameObject YouWin;
+        public string ItemToOpen = "key";
+        public int ItemAmountToOpen = 2;
         // กำหนดชื่อไอเท็มและจำนวนที่ต้องการใช้ในการเปิดทางออก
 
         public override bool Hit()
         {
             // ตรวจสอบว่าผู้เล่นมีไอเท็มที่ต้องการหรือไม่
-            YouWin.SetActive(true);
-            Debug.Log("You win");
-            return true;
+            bool isHasItemAmount = mapGenerator.player.inventory.HasItem(ItemToOpen, ItemAmountToOpen);
+
+            if (!isHasItemAmount)
+            {
+                YouWin.SetActive(true);
+
+                Debug.Log("You win");
+                return true;
+            }
+            else
+            {
+                Debug.Log("Need" + ItemToOpen + " "+ItemAmountToOpen + " to Open");
+                return false;
+            }
+           
           
         }
     }
