@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Assignment
 {
@@ -8,7 +9,7 @@ namespace Assignment
         public void Start()
         {
             // LCT01_SyntaxList();
-            LCT02_SyntaxLinkedList();
+            // LCT02_SyntaxLinkedList();
             // LCT03_SyntaxHashTable();
             // LCT04_SyntaxDictionary();
         }
@@ -17,92 +18,108 @@ namespace Assignment
 
         public void LCT01_SyntaxList()
         {
-            List<string> list = new List<string>();
-
+            throw new System.NotImplementedException();
         }
 
         public void LCT02_SyntaxLinkedList()
         {
-            LinkedList<string> linkedList = new LinkedList<string>();
-            linkedList.AddLast("Node 1");
-            linkedList.AddLast("Node 2");
-            linkedList.AddFirst("Node 0");
-            PrintLinkList(linkedList);
+            LinkedList<string> linkedlist = new LinkedList<string>();
 
-            LinkedListNode<string> firstNode = linkedList.First;
+            linkedlist.AddLast("Node 1");
 
-            Debug.Log("first: " + firstNode.Value);
-            LinkedListNode<string> lastNode = linkedList.Last;
+            linkedlist.AddLast("Node 2");
+
+            linkedlist.AddFirst("Node 0");
+
+            LinkedListNode<string> firstNode = linkedlist.First;
+            Debug.Log("last: " + firstNode.Value);
+
+            LinkedListNode<string> lastNode = linkedlist.First;
             Debug.Log("last: " + lastNode.Value);
-            LinkedListNode<string> node1 = linkedList.Find("Node 1 ");
-            Debug.Log("node: " + node1.Value);
-            Debug.Log(node1.Previous.Value);
-            Debug.Log(node1.Next.Value);
-            if (firstNode.Previous == null) { Debug.Log("firstNode.Previous is null"); }
-            if (lastNode.Previous == null) { Debug.Log("lastNode.Next is null"); }
 
-            linkedList.AddAfter(node1, "Node 1.5");
-            linkedList.AddBefore(node1, "Node 0.5");
-            PrintLinkList(linkedList);
+            Debug.Log("firstNode.Next: " + firstNode.Next.Value);
+            Debug.Log("firstNode.Next.Next: " + firstNode.Next.Next.Value);
 
+            Debug.Log("lastNode.Previous: " + lastNode.Previous.Value);
+            Debug.Log("lastNode.Previous: " + lastNode.Previous.Previous.Value);
 
-            linkedList.RemoveFirst();
-            PrintLinkList(linkedList);
-            linkedList.Remove("Node 2");//
-            PrintLinkList(linkedList);
-            linkedList.Clear();
-            PrintLinkList(linkedList);
-        }
+            if (firstNode.Previous == null) Debug.Log("firstNode.Previous == null");
+            if (lastNode.Next == null) Debug.Log("lastNode.Next == null");
 
-        void PrintLinkList(LinkedList<string> linkedList)
-        {
-            Debug.Log("-----linkedList----");
-            foreach (string s in linkedList)
-            {
-                Debug.Log(s);
-            }
+            linkedlist.AddAfter(firstNode, "Node 0.5");
+
+            linkedlist.AddBefore(lastNode, "Node 1.5");
+
+            LinkedListNode<string> node1 = linkedlist.Find("Node 1");
+
+            linkedlist.Remove("Node 1");
+            linkedlist.Remove(node1);
+            linkedlist.RemoveLast();
+            linkedlist.RemoveFirst();
+
+            linkedlist.Clear();
         }
 
         public void LCT03_SyntaxHashTable()
         {
-            throw new System.NotImplementedException();
+            Hashtable table = new Hashtable();
+            table.Add("Potion", 1);
+            table.Add(true, "");
+            table.Add(0, 0);
+            table[true] = 1;
         }
 
         public void LCT04_SyntaxDictionary()
         {
-            Dictionary<int, string> dictionary = new Dictionary<int, string>();
-            dictionary.Add(1, "Apple");
-            dictionary.Add(2, "Banana");
-            dictionary[3] = "cherry";
+            Dictionary<string, int> inv = new Dictionary<string, int>();
+            var inv2 = new Dictionary<string, int>();
 
-            //Debug.Log(dictionary[4]);
-            int Keytocheck = 1;
-            bool hasKey = dictionary.ContainsKey(Keytocheck);
-            Debug.Log($"has key {Keytocheck}:{hasKey}");
-            if (hasKey)
+            // "Potion": 1
+            inv.Add("Potion", 1);
+
+            // "Potion": 1
+            // "Apple": 10
+            inv.Add("Apple", 10);
+
+            // "Potion": 1
+            // "Apple": 10
+            // "Banana": 5
+            inv["Banana"] = 5;
+
+            // "Potion": 10
+            // "Apple": 10
+            // "Banana": 5
+            inv["Potion"] = 10;
+
+            var pickupItem = "Sword";
+            // "Potion": 10
+            // "Apple": 10
+            // "Banana": 5
+            // "Sword": 5
+            inv[pickupItem] = 1;
+
+            //foreach (KeyValuePair<string, int> pair in inv)
+            foreach (var pair in inv)
             {
-                Debug.Log(dictionary[Keytocheck]);
-            }
-            foreach (int k in dictionary.Keys)
-            {
-                Debug.Log(k);
-            }
-            foreach (string s in dictionary.Values)
-            {
-                Debug.Log(s);
+                string key = pair.Key;
+                int value = pair.Value;
+                Debug.Log($"Key: {key} value: {value}");
             }
 
-            dictionary.Remove(1);
-            foreach (string s in dictionary.Values)
-            {
-                Debug.Log(s);
-            }
-            dictionary.Clear();
-            foreach (string s in dictionary.Values)
-            {
-                Debug.Log(s);
-            }
+            var appleExists = inv.ContainsKey("Apple");
+            Debug.Log(appleExists);
 
+            var keyExists = inv.ContainsKey("Key");
+            Debug.Log(keyExists);
+
+            inv.Remove("Apple");
+
+            foreach (var pair in inv)
+            {
+                string key = pair.Key;
+                int value = pair.Value;
+                Debug.Log($"Key: {key} value: {value}");
+            }
         }
 
         #endregion
